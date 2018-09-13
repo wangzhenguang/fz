@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/RandomWords.dart';
+import 'package:fz/RandomWords.dart';
 import 'package:english_words/english_words.dart';
 
 class RandowmWordsState extends State<RandomWords> {

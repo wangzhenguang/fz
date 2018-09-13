@@ -1,4 +1,4 @@
-name: hello_flutter
+name: fz
 description: A new Flutter project.
 
 dependencies:
@@ -10,6 +10,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flutter_redux: ^0.5.2
+  fluttertoast: ^2.0.7
+  event_bus:  ^1.0.1
+  flutter_statusbar: ^0.0.1
+  flutter_spinkit: ^2.0.1
+  dio: ^1.0.1
+  connectivity: ^0.3.1
+  shared_preferences: ^0.4.2
 
 dev_dependencies:
   flutter_test:
@@ -34,7 +41,9 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-    - images/bg.jpg
+    - static/images/bg.jpg
+    - static/images/icon_homepage_normal.png
+    - static/images/icon_homepage_selected.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -61,4 +70,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
+  fonts:
+       - family: fz_iconfont
+         fonts:
+           - asset: static/iconfont/iconfont.ttf
 

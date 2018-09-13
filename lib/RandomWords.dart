@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/RandomWordsState.dart';
+import 'package:fz/RandomWordsState.dart';
 
 class RandomWords extends StatefulWidget {
   @override

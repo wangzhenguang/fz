@@ -5,18 +5,17 @@ import 'package:connectivity/connectivity.dart';
 import 'package:fz/net/ResultData.dart';
 import 'package:fz/net/NetCode.dart';
 import 'package:fz/config/Config.dart';
-import 'package:fz/net/BaseResponse.dart';
+import 'package:fz/net/service/Api.dart';
+import 'package:fz/util/LocalStorage.dart';
 
 class NetEngine {
   static Options options = new Options(
-    baseUrl: "http://api.feizan.com/",
-    connectTimeout: 5000,
-    receiveTimeout: 3000,
-    method: "post",
-    contentType:  ContentType.json
-  );
+      baseUrl: "http://api.feizan.com/",
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
+      contentType: ContentType.json);
 
-  static excute(url, params, {noTip = false}) async {
+  static excute(url, params, {noTip = false, method = "get"}) async {
     // 判断网咯情况
     var connectResult = await new Connectivity().checkConnectivity();
     if (connectResult == ConnectivityResult.none) {
@@ -25,11 +24,17 @@ class NetEngine {
           NetCode.errorHandleFunction(NetCode.NETWORK_ERROR, "无法连接到网络", true),
           NetCode.NETWORK_ERROR);
     }
+    options.method = method;
+
+    var token =  await LocalStorage.get(Api.USER_TOKEN);
+    if(token!= null){
+      saveToken(token);
+    }
 
     Dio dio = new Dio();
     Response response;
     try {
-      response = await dio.request(url, data: params,options: options);
+      response = await dio.request(url, data: params, options: options);
     } on DioError catch (e) {
       Response errorResponse = e.response == null
           ? new Response(statusCode: NetCode.NETWORK_UNKNOW_EXCEPTION)

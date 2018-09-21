@@ -1,13 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/net/service/Api.dart';
+import 'package:fz/redux/FZState.dart';
+import 'package:fz/util/NavigatorUtils.dart';
+import 'package:fz/widget/FZListState.dart';
+import 'package:fz/widget/FZPullLoadWidget.dart';
+import 'package:fz/widget/FeedItem.dart';
+import 'package:redux/redux.dart';
 
-class DynamicPage extends StatelessWidget{
+class DynamicPage extends StatefulWidget {
+  @override
+  createState() => _DynamicPageState();
+}
+
+class _DynamicPageState extends FZListState<DynamicPage>
+    with WidgetsBindingObserver {
+  @override
+  void didChangeDependencies() {
+    pullLoadWidgetControl.dataList = getStore().state.feeds;
+    if (pullLoadWidgetControl.dataList.length == 0) {
+      showRefreshLoading();
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print(" _DynamicPageState");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar:AppBar(
-        title: Text("动态"),
-      ),
+    super.build(context);
+    return StoreBuilder<FZState>(
+      builder: (context, store) {
+        return FZPullLoadWidget(
+          pullLoadWidgetControl,
+          handleRefresh,
+          onLoadMore,
+          refreshKey: refreshIndicatorKey,
+          itemBuilder: (context, index) =>
+              _renderItem(pullLoadWidgetControl.dataList[index]),
+        );
+      },
     );
   }
 
+  @override
+  requestRefresh() async {
+    //刷新请求
+    BaseModel result = await Api.getFeeds(getStore(), page);
+    print("$result");
+    if (result.auth_status == -1) {
+      //没有token 跳转登录
+      NavigatorUtils.goLogin(context);
+      return;
+    }
+  }
+
+  requestLoadMore() async {
+    //加载更多
+    BaseModel result = await Api.getFeeds(getStore(), ++page);
+    if (result.auth_status == -1) {
+      //没有token 跳转登录
+      NavigatorUtils.goLogin(context);
+      return;
+    }
+  }
+
+  _renderItem(item) {
+    return new FeedsItem(item);
+  }
 }

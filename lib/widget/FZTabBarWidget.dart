@@ -22,23 +22,28 @@ class FZTabBarWidget extends StatefulWidget {
   final Widget title;
 
   final ValueChanged<int> onPageChanged;
+  final ValueChanged<int> onTap;
 
   final Widget drawer;
+  final List<Widget> actions;
   final List<BottomNavigationBarItem> bottomNavigationBarItem;
+  final bool centerTitle;
 
-  FZTabBarWidget({
-    Key key,
-    @required this.type,
-    this.tabItems,
-    this.indicatorColor,
-    this.tabViews,
-    this.floatingActionButton,
-    this.title,
-    this.onPageChanged,
-    this.drawer,
-    this.bottomNavigationBarItem,
-    this.pageController
-  });
+  FZTabBarWidget(
+      {Key key,
+      @required this.type,
+      this.tabItems,
+      this.indicatorColor,
+      this.tabViews,
+      this.floatingActionButton,
+      this.title,
+      this.onPageChanged,
+      this.drawer,
+      this.bottomNavigationBarItem,
+      this.pageController,
+      this.actions,
+      this.centerTitle = true,
+      this.onTap});
 
   @override
   State<StatefulWidget> createState() {
@@ -50,10 +55,12 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+
     _tabController =
         new TabController(length: widget.tabViews.length, vsync: this);
   }
@@ -72,6 +79,8 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
         appBar: new AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: widget.title,
+          actions: widget.actions,
+          centerTitle: widget.centerTitle,
           bottom: new TabBar(
             tabs: widget.tabItems,
             controller: _tabController,
@@ -95,6 +104,8 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
       appBar: new AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: widget.title,
+        actions: widget.actions,
+        centerTitle: widget.centerTitle,
       ),
       body: new TabBarView(
         children: widget.tabViews,
@@ -105,13 +116,18 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
         child: new BottomNavigationBar(
           items: widget.bottomNavigationBarItem,
           type: BottomNavigationBarType.fixed,
-          currentIndex: 0,
+          currentIndex: _currentIndex,
           onTap: (index) {
             _tabController?.animateTo(index);
             widget.onPageChanged?.call(index);
+            setState(() {
+              _currentIndex = index;
+            });
           },
         ),
       ),
     );
   }
+
+  pageChange(index) => index;
 }

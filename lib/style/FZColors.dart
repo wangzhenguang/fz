@@ -19,16 +19,16 @@ class FZColors {
   static const MaterialColor primarySwatch = const MaterialColor(
     primaryValue,
     const <int, Color>{
-      50: const Color(primaryLightValue),
-      100: const Color(primaryLightValue),
-      200: const Color(primaryLightValue),
-      300: const Color(primaryLightValue),
-      400: const Color(primaryLightValue),
+      50: const Color(primaryValue),
+      100: const Color(primaryValue),
+      200: const Color(primaryValue),
+      300: const Color(primaryValue),
+      400: const Color(primaryValue),
       500: const Color(primaryValue),
-      600: const Color(primaryDarkValue),
-      700: const Color(primaryDarkValue),
-      800: const Color(primaryDarkValue),
-      900: const Color(primaryDarkValue),
+      600: const Color(primaryValue),
+      700: const Color(primaryValue),
+      800: const Color(primaryValue),
+      900: const Color(primaryValue),
     },
   );
 }

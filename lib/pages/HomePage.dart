@@ -6,11 +6,30 @@ import 'package:fz/pages/MinePage.dart';
 import 'package:fz/pages/NearbyPage.dart';
 import 'package:fz/pages/PhotoPage.dart';
 import 'package:fz/style/FZColors.dart';
+import 'package:fz/style/FZIconfont.dart';
+import 'package:fz/widget/BottomNavigationWidget.dart';
 import 'package:fz/widget/FZTabBarWidget.dart';
 import 'package:fz/pages/DynamicPage.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static final String rName = "home";
+
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePageState();
+  }
+}
+
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  final tabTitle = ["动态", "附近", "照片", "日志", "我的"];
+
+  final tabTextStyleNormal =
+      new TextStyle(color: const Color(FZColors.primaryDarkValue));
+  final tabTextStyleSelected = new TextStyle(color: Color(FZColors.colorPri));
+  String _title;
+
+  int _tabIndex = 0;
 
   Future<bool> _dialogExitApp(BuildContext context) {
     return showDialog(
@@ -29,54 +48,207 @@ class HomePage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _title = tabTitle[_tabIndex];
+    });
+  }
+
+  List<Widget> _list = <Widget>[
+    DynamicPage(),
+    NearbyPage(),
+    PhotoPage(),
+    LogPage(),
+    MinePage(),
+  ];
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _dialogExitApp(context),
       child: FZTabBarWidget(
         type: FZTabBarWidget.BOTTOM_TAB,
         bottomNavigationBarItem: _renderBottomNavigateionItem(),
-        tabViews: <Widget>[
-          DynamicPage(),
-          NearbyPage(),
-          PhotoPage(),
-          LogPage(),
-          MinePage(),
+        tabViews: _list,
+        title: _renderAppBar(),
+        actions: <Widget>[
+          new IconButton(
+              icon: new Icon(Icons.add_a_photo), onPressed: _writeNote),
+          new IconButton(icon: new Icon(Icons.note_add), onPressed: _writeNote)
         ],
-        title: Text(
-          "z",
-          style: TextStyle(fontSize: 19.0, color: FZColors.whiteText),
-        ),
+        onPageChanged: _onPageChanged,
+      ),
+    );
+
+    return WillPopScope(
+      onWillPop: () => _dialogExitApp(context),
+      child: BottomNavigationWidget(
+        tabBarTitles: tabTitle,
+        tabImages: _tabImages,
+        body: _body,
+        titles: tabTitle,
+        actions: <Widget>[
+          new IconButton(
+              icon: new Icon(Icons.add_a_photo), onPressed: _writeNote),
+          new IconButton(icon: new Icon(Icons.note_add), onPressed: _writeNote)
+        ],
+        tabTextNormal: Color(FZColors.primaryDarkValue),
+        tabTextSelected: Color(FZColors.colorPri),
+        themeColor: Color(FZColors.colorPri),
       ),
     );
   }
 
+  _onPageChanged(index) {
+    print("_onPageChanged $index");
+    setState(() {
+      _title = tabTitle[index];
+      this._tabIndex = index;
+    });
+  }
+
+  _writeNote() {
+    print("写记录");
+  }
+
+  _renderAppBar() {
+    return Text(_title,
+        style: TextStyle(fontSize: 19.0, color: FZColors.whiteText));
+  }
+
+  var _tabImages = [
+    [
+      Icon(
+        FZIconFont.dynamic,
+        color: Color(FZColors.primaryDarkValue),
+      ),
+      Icon(
+        FZIconFont.dynamic,
+        color: Color(FZColors.colorPri),
+      )
+    ],
+    [
+      Icon(
+        FZIconFont.nearby,
+        color: Color(FZColors.primaryDarkValue),
+      ),
+      Icon(
+        FZIconFont.nearby,
+        color: Color(FZColors.colorPri),
+      )
+    ],
+    [
+      Icon(
+        FZIconFont.photo,
+        color: Color(FZColors.primaryDarkValue),
+      ),
+      Icon(
+        FZIconFont.photo,
+        color: Color(FZColors.colorPri),
+      )
+    ],
+    [
+      Icon(
+        FZIconFont.log,
+        color: Color(FZColors.primaryDarkValue),
+      ),
+      Icon(
+        FZIconFont.log,
+        color: Color(FZColors.colorPri),
+      )
+    ],
+    [
+      Icon(
+        FZIconFont.mine,
+        color: Color(FZColors.primaryDarkValue),
+      ),
+      Icon(
+        FZIconFont.mine,
+        color: Color(FZColors.colorPri),
+      )
+    ]
+  ];
+
+  var _body = <Widget>[
+    DynamicPage(),
+    NearbyPage(),
+    PhotoPage(),
+    LogPage(),
+    MinePage(),
+  ];
+
   _renderBottomNavigateionItem() {
     return [
       BottomNavigationBarItem(
-        icon: new Image.asset("static/images/icon_homepage_normal.png"),
-        activeIcon: Image.asset("static/images/icon_homepage_selected.png"),
-        title: Text("动态"),
+        icon: Icon(
+          FZIconFont.dynamic,
+          color: Color(FZColors.primaryDarkValue),
+        ),
+        activeIcon: Icon(
+          FZIconFont.dynamic,
+          color: Color(FZColors.colorPri),
+        ),
+        title: getTabTitle(0),
       ),
       BottomNavigationBarItem(
-        icon: new Image.asset("static/images/icon_homepage_normal.png"),
-        activeIcon: Image.asset("static/images/icon_homepage_selected.png"),
-        title: Text("附近"),
+        icon: Icon(
+          FZIconFont.nearby,
+          color: Color(FZColors.primaryDarkValue),
+        ),
+        activeIcon: Icon(
+          FZIconFont.nearby,
+          color: Color(FZColors.colorPri),
+        ),
+        title: getTabTitle(1),
       ),
       BottomNavigationBarItem(
-        icon: new Image.asset("static/images/icon_homepage_normal.png"),
-        activeIcon: Image.asset("static/images/icon_homepage_selected.png"),
-        title: Text("照片"),
+        icon: Icon(
+          FZIconFont.photo,
+          color: Color(FZColors.primaryDarkValue),
+        ),
+        activeIcon: Icon(
+          FZIconFont.photo,
+          color: Color(FZColors.colorPri),
+        ),
+        title: getTabTitle(2),
       ),
       BottomNavigationBarItem(
-        icon: new Image.asset("static/images/icon_homepage_normal.png"),
-        activeIcon: Image.asset("static/images/icon_homepage_selected.png"),
-        title: Text("日志"),
+        icon: Icon(
+          FZIconFont.log,
+          color: Color(FZColors.primaryDarkValue),
+        ),
+        activeIcon: Icon(
+          FZIconFont.log,
+          color: Color(FZColors.colorPri),
+        ),
+        title: getTabTitle(3),
       ),
       BottomNavigationBarItem(
-        icon: new Image.asset("static/images/icon_homepage_normal.png"),
-        activeIcon: Image.asset("static/images/icon_homepage_selected.png"),
-        title: Text("我的"),
+        icon: Icon(
+          FZIconFont.mine,
+          color: Color(FZColors.primaryDarkValue),
+        ),
+        activeIcon: Icon(
+          FZIconFont.mine,
+          color: Color(FZColors.colorPri),
+        ),
+        title: getTabTitle(4),
       ),
     ];
   }
+
+  Text getTabTitle(int curIndex) {
+    return new Text(tabTitle[curIndex], style: getTabTextStyle(curIndex));
+  }
+
+  TextStyle getTabTextStyle(int curIndex) {
+    if (curIndex == _tabIndex) {
+      return tabTextStyleSelected;
+    }
+    return tabTextStyleNormal;
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

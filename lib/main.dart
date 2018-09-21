@@ -17,11 +17,12 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   final store = new Store<FZState>(appReducer,
       initialState: new FZState(
+        feeds: new List(),
+        photos: new List(),
         themeData: new ThemeData(
             primarySwatch: FZColors.primarySwatch,
             platform: TargetPlatform.iOS),
       ));
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
               LoginPage.rName: (context) {
                 return LoginPage();
               },
-              HomePage.rName : (context){
+              HomePage.rName: (context) {
                 return HomePage();
               }
             },

@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fz/net/NetEngine.dart';
-import 'package:fz/net/service/UserService.dart';
+import 'package:fz/net/service/Api.dart';
 import 'package:fz/util/LocalStorage.dart';
 
-class MinePage extends StatelessWidget{
+class MinePage extends StatefulWidget {
 
   @override
-  StatelessElement createElement() {
-    print("createElement");
-    print(LocalStorage.remove(UserService.USER_INFO));
+  State<StatefulWidget> createState() => _MinePageState();
 
-    return super.createElement();
+}
 
-  }
 
+class _MinePageState extends State<MinePage> with AutomaticKeepAliveClientMixin{
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    print("widget build(");
-
+    print('MinePage');
     return new Scaffold(
       appBar:AppBar(
-        title: Text("我的"),
+        title: Text("日志"),
       ),
     );
   }
-
-
 
 }

@@ -113,7 +113,7 @@ class FeedsItem extends StatelessWidget {
             child: itemLayout),
       ),
       onTap: () {
-        NavigatorUtils.goFeedsDetail(context, feedsModel.feedid, feedsModel.idtype);
+        NavigatorUtils.goFeedsDetail(context, feedsModel.id, feedsModel.idtype);
       },
     );
 

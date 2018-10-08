@@ -133,16 +133,13 @@ abstract class Api {
   }
 
   static Future getFeedDetailAndReply(id, page, idtype) async {
-    String m = 'user/user';
-    String a = 'getStatusComment';
-    String m1;
-    String a1;
+    String url;
+    String replyUrl;
     switch (idtype) {
       case "blogid":
-        m = 'user/blog&type=android';
-        a = 'getBlog';
-        m1 = "user/blog";
-        a1 = 'getBlogReply';
+        url = "$baseUrl?m=user/blog&a=getBlog&type=android&blogId=$id";
+        replyUrl =
+            "$baseUrl?m=user/blog&a=getBlogReply&pageSize=30&id=$id&page=$page";
         break;
 //      case "albumid":
 //        m = 'user/photo';
@@ -151,10 +148,10 @@ abstract class Api {
 //        a1 = 'getPhotoReply';
 //        break;
       case "picid":
-        m = 'user/photo';
-        a = 'getPhotoMessage';
-        m1 = "user/photo";
-        a1 = 'getPhotoReply';
+//        m = 'user/photo';
+//        a = 'getPhotoMessage';
+//        m1 = "user/photo";
+//        a1 = 'getPhotoReply';
         break;
 //      case "other":
 //        m = 'user/photo';
@@ -162,18 +159,16 @@ abstract class Api {
 //        m1 = "user/photo";
 //        a1 = 'getPhotoReply';
 //        break;
+      default:
+        url =
+            "$baseUrl?m=user/user&a=getStatusComment&page=$page&pageSize=30&id=$id"; //这种不需要另外调用 评论的接口
     }
 
-    String url = "$baseUrl?m=$m&a=$a&id=$id&page=$page";
-    String reply = "$baseUrl?m=$m1&a=$a1&pageSize=32&id=$id&page=$page";
     ResultData res = await NetEngine.excute(url, null);
-    print("blog ${res.data}");
-    print("m1 ${m1}");
-    if (m1 != null) {
-      ResultData replyRes = await NetEngine.excute(reply, null);
-      print("replyRes ${replyRes.data}");
+    print("$idtype $url ${res.data}");
+    if (replyUrl != null) {
+      ResultData replyRes = await NetEngine.excute(replyUrl, null);
+      print("reply $idtype $replyUrl ${replyRes.data}");
     }
-
-
   }
 }

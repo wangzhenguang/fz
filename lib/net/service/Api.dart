@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:fz/config/Config.dart';
 import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/nearby/NearbyModel.dart';
 import 'package:fz/model/photo/PhotoModel.dart';
 import 'package:fz/net/NetCode.dart';
 import 'package:fz/net/NetEngine.dart';
@@ -11,10 +12,11 @@ import 'package:fz/net/ResultData.dart';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:fz/redux/FeedsRedux.dart';
+import 'package:fz/redux/LogRedux.dart';
+import 'package:fz/redux/NearbyRedux.dart';
 import 'package:fz/redux/PhotoRedux.dart';
 
 import 'package:fz/util/LocalStorage.dart';
-import 'package:fz/util/NavigatorUtils.dart';
 import 'package:redux/redux.dart';
 
 abstract class Api {
@@ -42,7 +44,7 @@ abstract class Api {
         print("${res.data}");
         NetEngine.saveToken(res.data['auth_token']);
         // 保存用户数据
-        await LocalStorage.save(USER_INFO, res.data["data"].toString());
+        await LocalStorage.save(USER_INFO, json.encode(res.data["data"]));
         await LocalStorage.save(USER_TOKEN, res.data['auth_token']);
       }
 
@@ -54,7 +56,6 @@ abstract class Api {
     ResultData res = await NetEngine.excute("$feedsUrl$page", null);
     if (res != null && res.code == NetCode.SUCCESS) {
       BaseModel baseModel = new BaseModel.fromJson(res.data);
-      print('getFeeds $baseModel.');
       //判断是否获取数据成功
       if (res.data["feed_status"] == 1 && page == 1) {
         store.dispatch(new FeedsRefreshAction(baseModel.data.list));
@@ -85,22 +86,94 @@ abstract class Api {
     return null;
   }
 
-  static void updateLocation(latitude, longitude) {
+  static void updateLocation(latitude, longitude) async {
     String updateLocationUrl =
         "$baseUrl?m=user/user&a=updateLocation&pageSize=32&latitude=$latitude&longitude=$longitude";
+    NetEngine.excute(updateLocationUrl, null);
   }
 
-  static getNearUsers(latitude, longitude) {
+  static getNearUsers(store, latitude, longitude, int page) async {
     String url =
-        "$baseUrl?m=search/friend&a=getNearUsers&pageSize=32&latitude=$latitude&longitude=$longitude";
+        "$baseUrl?m=search/friend&a=getNearUsers&pageSize=32&latitude=$latitude&longitude=$longitude&page=$page";
+    ResultData res = await NetEngine.excute(url, null);
+    if (res != null && res.code == NetCode.SUCCESS) {
+      NearbyModel baseModel = new NearbyModel.fromJson(res.data);
+      //判断是否获取数据成功
+      if (baseModel.search_status == 1 && page == 1) {
+        store.dispatch(new NearbyRefreshAction(baseModel.data.user));
+      } else if (res.data["search_status"] == 1 && page > 1) {
+        store.dispatch(new NearbyLoadMoreAction(baseModel.data.user));
+      }
+      return baseModel;
+    }
   }
 
-  static getHotBlogs(page, {period = 30}) {
+  static getHotBlogs(store, int page, {period = 30}) async {
     String url =
-        "$baseUrl?m=user/blog&a=getHotBlog&pageSize=${Config.DYNAMIC_PAGE_SIZE}&period=$period&page=$page";
+        "$baseUrl?m=user/blog&a=getHotBlogs&pageSize=${Config.DYNAMIC_PAGE_SIZE}&period=$period&page=$page";
+
+    ResultData res = await NetEngine.excute(url, null);
+    if (res != null && res.code == NetCode.SUCCESS) {
+      BaseModel baseModel = new BaseModel.fromJson(res.data);
+      //判断是否获取数据成功
+      if (baseModel.status == 1 && page == 1) {
+        store.dispatch(new LogRefreshAction(
+          baseModel.data.list,
+        ));
+      } else if (baseModel.status == 1 && page > 1) {
+        store.dispatch(new LogLoadMoreAction(baseModel.data.list));
+      }
+      return baseModel;
+    }
+    return null;
   }
 
   static getUserProfile(uid) {
     String url = "$baseUrl?m=user/user&a=getProfile&uid=$uid";
+  }
+
+  static Future getFeedDetailAndReply(id, page, idtype) async {
+    String m = 'user/user';
+    String a = 'getStatusComment';
+    String m1;
+    String a1;
+    switch (idtype) {
+      case "blogid":
+        m = 'user/blog&type=android';
+        a = 'getBlog';
+        m1 = "user/blog";
+        a1 = 'getBlogReply';
+        break;
+//      case "albumid":
+//        m = 'user/photo';
+//        a = 'getPhotoMessage';
+//        m1 = "user/photo";
+//        a1 = 'getPhotoReply';
+//        break;
+      case "picid":
+        m = 'user/photo';
+        a = 'getPhotoMessage';
+        m1 = "user/photo";
+        a1 = 'getPhotoReply';
+        break;
+//      case "other":
+//        m = 'user/photo';
+//        a = 'getPhotoMessage';
+//        m1 = "user/photo";
+//        a1 = 'getPhotoReply';
+//        break;
+    }
+
+    String url = "$baseUrl?m=$m&a=$a&id=$id&page=$page";
+    String reply = "$baseUrl?m=$m1&a=$a1&pageSize=32&id=$id&page=$page";
+    ResultData res = await NetEngine.excute(url, null);
+    print("blog ${res.data}");
+    print("m1 ${m1}");
+    if (m1 != null) {
+      ResultData replyRes = await NetEngine.excute(reply, null);
+      print("replyRes ${replyRes.data}");
+    }
+
+
   }
 }

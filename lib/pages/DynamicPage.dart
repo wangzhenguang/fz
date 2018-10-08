@@ -6,7 +6,7 @@ import 'package:fz/redux/FZState.dart';
 import 'package:fz/util/NavigatorUtils.dart';
 import 'package:fz/widget/FZListState.dart';
 import 'package:fz/widget/FZPullLoadWidget.dart';
-import 'package:fz/widget/FeedItem.dart';
+import 'package:fz/widget/FeedsItem.dart';
 import 'package:redux/redux.dart';
 
 class DynamicPage extends StatefulWidget {
@@ -25,10 +25,10 @@ class _DynamicPageState extends FZListState<DynamicPage>
     super.didChangeDependencies();
   }
 
+
   @override
   void initState() {
     super.initState();
-    print(" _DynamicPageState");
   }
 
   @override
@@ -52,7 +52,6 @@ class _DynamicPageState extends FZListState<DynamicPage>
   requestRefresh() async {
     //刷新请求
     BaseModel result = await Api.getFeeds(getStore(), page);
-    print("$result");
     if (result.auth_status == -1) {
       //没有token 跳转登录
       NavigatorUtils.goLogin(context);
@@ -62,11 +61,13 @@ class _DynamicPageState extends FZListState<DynamicPage>
 
   requestLoadMore() async {
     //加载更多
-    BaseModel result = await Api.getFeeds(getStore(), ++page);
-    if (result.auth_status == -1) {
+    BaseModel result = await Api.getFeeds(getStore(),page);
+    if (result?.auth_status == -1) {
       //没有token 跳转登录
       NavigatorUtils.goLogin(context);
       return;
+    }else if(result == null){
+      return ;
     }
   }
 

@@ -63,9 +63,8 @@ abstract class FZListState<T extends StatefulWidget> extends State<T>
     }
     isLoading = true;
     page = 1;
-    print("handleRefresh");
-    var res = await requestRefresh(); //调用刷新回调
-    resolveRefreshResult(res); //
+    requestRefresh(); //调用刷新回调
+//    resolveRefreshResult(res); //
     /// todo 解析返回的数据 看是否需要判断需要加载更多
 //    if (res?.next != null) {
 //      var resNext = await res.next;
@@ -82,14 +81,14 @@ abstract class FZListState<T extends StatefulWidget> extends State<T>
     }
     isLoading = true;
     page++;
-    var res = await requestLoadMore();
-    if (res != null && res.code == NetCode.SUCCESS) {
-      if (isShow) {
-        setState(() {
-          pullLoadWidgetControl.dataList.addAll(res.data);
-        });
-      }
-    }
+    requestLoadMore();
+//    if (res != null && res.code == NetCode.SUCCESS) {
+//      if (isShow) {
+//        setState(() {
+//          pullLoadWidgetControl.dataList.addAll(res.data);
+//        });
+//      }
+//    }
     isLoading = false;
     return null;
   }

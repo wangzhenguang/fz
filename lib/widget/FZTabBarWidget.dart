@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fz/style/FZColors.dart';
 
 class FZTabBarWidget extends StatefulWidget {
   ///底部模式type
@@ -77,7 +78,7 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
     if (widget.type == FZTabBarWidget.TOP_TAB) {
       return Scaffold(
         appBar: new AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.black,
           title: widget.title,
           actions: widget.actions,
           centerTitle: widget.centerTitle,
@@ -98,11 +99,13 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
       );
     }
 
+
     //底部
     return new Scaffold(
       drawer: widget.drawer,
+//      backgroundColor: Color(FZColors.lineBlack),
       appBar: new AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+//        backgroundColor: Color(FZColors.primaryValue),
         title: widget.title,
         actions: widget.actions,
         centerTitle: widget.centerTitle,
@@ -111,11 +114,13 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
         children: widget.tabViews,
         controller: _tabController,
       ),
-      bottomNavigationBar: new Material(
-        color: Theme.of(context).primaryColor,
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Color(FZColors.appBarColor)
+        ),
         child: new BottomNavigationBar(
           items: widget.bottomNavigationBarItem,
-          type: BottomNavigationBarType.fixed,
+//          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) {
             _tabController?.animateTo(index);

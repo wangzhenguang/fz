@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage>
   final tabTitle = ["动态", "附近", "照片", "日志", "我的"];
 
   final tabTextStyleNormal =
-      new TextStyle(color: const Color(FZColors.primaryDarkValue));
-  final tabTextStyleSelected = new TextStyle(color: Color(FZColors.colorPri));
+      new TextStyle(color: const Color(FZColors.textGray));
+  final tabTextStyleSelected = new TextStyle(color: Color(FZColors.textGray));
   String _title;
 
   int _tabIndex = 0;
@@ -183,55 +183,55 @@ class _HomePageState extends State<HomePage>
       BottomNavigationBarItem(
         icon: Icon(
           FZIconFont.dynamic,
-          color: Color(FZColors.primaryDarkValue),
+          color: Color(FZColors.textGray),
         ),
         activeIcon: Icon(
           FZIconFont.dynamic,
-          color: Color(FZColors.colorPri),
+          color: Color(FZColors.textGray),
         ),
         title: getTabTitle(0),
       ),
       BottomNavigationBarItem(
         icon: Icon(
           FZIconFont.nearby,
-          color: Color(FZColors.primaryDarkValue),
+          color: Color(FZColors.textGray),
         ),
         activeIcon: Icon(
           FZIconFont.nearby,
-          color: Color(FZColors.colorPri),
+          color: Color(FZColors.textGray),
         ),
         title: getTabTitle(1),
       ),
       BottomNavigationBarItem(
         icon: Icon(
           FZIconFont.photo,
-          color: Color(FZColors.primaryDarkValue),
+          color: Color(FZColors.textGray),
         ),
         activeIcon: Icon(
           FZIconFont.photo,
-          color: Color(FZColors.colorPri),
+          color: Color(FZColors.textGray),
         ),
         title: getTabTitle(2),
       ),
       BottomNavigationBarItem(
         icon: Icon(
           FZIconFont.log,
-          color: Color(FZColors.primaryDarkValue),
+          color: Color(FZColors.textGray),
         ),
         activeIcon: Icon(
           FZIconFont.log,
-          color: Color(FZColors.colorPri),
+          color: Color(FZColors.textGray),
         ),
         title: getTabTitle(3),
       ),
       BottomNavigationBarItem(
         icon: Icon(
           FZIconFont.mine,
-          color: Color(FZColors.primaryDarkValue),
+          color: Color(FZColors.textGray),
         ),
         activeIcon: Icon(
           FZIconFont.mine,
-          color: Color(FZColors.colorPri),
+          color: Color(FZColors.textGray),
         ),
         title: getTabTitle(4),
       ),

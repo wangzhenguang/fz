@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/style/FZColors.dart';
 import 'package:fz/style/FZString.dart';
 import 'package:fz/style/FZTextStyle.dart';
 import 'package:fz/style/FZIconfont.dart';
@@ -22,11 +23,17 @@ class FZPullLoadWidget extends StatefulWidget {
 
   final IndexedWidgetBuilder renderGridViewItem;
 
+  final bool showLoadMoreItem;
+
+  final double childAspectRatio;
+
   FZPullLoadWidget(this.control, this.onRefresh, this.onLoadMore,
       {this.refreshKey,
       this.columns = 1,
       this.itemBuilder,
-      this.renderGridViewItem});
+      this.showLoadMoreItem = true,
+      this.renderGridViewItem,
+      this.childAspectRatio = 1.0});
 
   @override
   State<StatefulWidget> createState() {
@@ -55,7 +62,7 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
   Widget build(BuildContext context) {
     return new RefreshIndicator(
         key: widget.refreshKey,
-        child: widget.columns == 1
+        child: widget.columns == 1 || _getListCount() == 1
             ? new ListView.builder(
                 ///保持ListView任何情况都能滚动，解决在RefreshIndicator的兼容问题。
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -68,6 +75,9 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
             : GridView.count(
                 crossAxisCount: widget.columns,
                 controller: _scrollController,
+                childAspectRatio: widget.childAspectRatio,
+//                crossAxisSpacing: 10.0,
+//                mainAxisSpacing: 10.0,
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: List.generate(_getListCount(), (index) {
                   return _getItem(index);
@@ -84,7 +94,7 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
     if (widget.control.needHeader) {
       ///如果需要头部，用Item 0 的 Widget 作为ListView的头部
       ///列表数量大于0时，因为头部和底部加载更多选项，需要对列表数据总数+2
-      return (widget.control.dataList.length > 0)
+      return (widget.control.dataList.length > 0 && widget.showLoadMoreItem)
           ? widget.control.dataList.length + 2
           : widget.control.dataList.length + 1;
     } else {
@@ -94,7 +104,7 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
       }
 
       ///如果有数据,因为部加载更多选项，需要对列表数据总数+1
-      return (widget.control.dataList.length > 0)
+      return (widget.control.dataList.length > 0 && widget.showLoadMoreItem)
           ? widget.control.dataList.length + 1
           : widget.control.dataList.length;
     }
@@ -104,7 +114,8 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
   _getItem(int index) {
     if (!widget.control.needHeader &&
         index == widget.control.dataList.length &&
-        widget.control.dataList.length != 0) {
+        widget.control.dataList.length != 0 &&
+        widget.showLoadMoreItem) {
       ///如果不需要头部，并且数据不为0，当index等于数据长度时，渲染加载更多Item（因为index是从0开始）
       return _buildProgressIndicator();
     } else if (widget.control.needHeader &&
@@ -151,8 +162,7 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
                 ///loading框
-                new SpinKitRotatingCircle(
-                    color: Theme.of(context).primaryColor),
+                new SpinKitRotatingCircle(color: Color(FZColors.textGray)),
                 new Container(
                   width: 5.0,
                 ),
@@ -161,7 +171,7 @@ class _FZPullLoadWidgetState extends State<FZPullLoadWidget> {
                 new Text(
                   FZString.load_more_text,
                   style: TextStyle(
-                    color: Color(0xFF121917),
+                    color: Color(FZColors.textGray),
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                   ),

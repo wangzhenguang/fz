@@ -29,6 +29,7 @@ class LoginPageState extends State<LoginPage> {
     _userPassController.text = 'nihaoa';
     _userNameController.text = "610880568@qq.com";
     return new Scaffold(
+      backgroundColor: Colors.white,
         appBar: new AppBar(
           title: new Text(
             "登录",

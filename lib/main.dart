@@ -15,17 +15,20 @@ import 'package:fz/style/FZString.dart';
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
-  final store = new Store<FZState>(appReducer,
-      initialState: new FZState(
-        feeds: new List(),
-        photos: new List(),
-        themeData: new ThemeData(
-            primarySwatch: FZColors.primarySwatch,
-            platform: TargetPlatform.iOS),
-      ));
+  final store = new Store<FZState>(appReducer, initialState: new FZState(
+    feeds: new List(),
+    nearbyModels: new List(),
+    blogModels: new List(),
+    photos: new List()
+  ));
+
+
+  MyApp({Key key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+
     return new StoreProvider(
         store: store,
         child: new StoreBuilder<FZState>(builder: (context, store) {

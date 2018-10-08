@@ -2,7 +2,7 @@ import 'package:fz/model/FeedsModel.dart';
 import 'package:fz/model/photo/PhotoModel.dart';
 import 'package:redux/redux.dart';
 
-final PhotoReducer= combineReducers<List<PhotoItemModel>>([
+final PhotoReducer = combineReducers<List<PhotoItemModel>>([
   TypedReducer<List<PhotoItemModel>, RefreshEventAction>(_refresh),
   TypedReducer<List<PhotoItemModel>, LoadMoreEventAction>(_loadMore)
 ]);
@@ -10,6 +10,7 @@ final PhotoReducer= combineReducers<List<PhotoItemModel>>([
 List<PhotoItemModel> _refresh(List<PhotoItemModel> list, action) {
   list?.clear();
   if (action.list == null) return list;
+  if (list == null) list = new List(action.list);
   list.addAll(action.list);
   return list;
 }

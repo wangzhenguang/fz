@@ -35,6 +35,7 @@ class _PhotoPageState extends FZListState<PhotoPage>
           handleRefresh,
           onLoadMore,
           columns: 4, //4列
+          showLoadMoreItem: false,
           refreshKey: refreshIndicatorKey,
           itemBuilder: (context, index) => _renderItem(context, index),
         );

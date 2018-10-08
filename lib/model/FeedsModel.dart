@@ -7,29 +7,24 @@ class BaseModel {
   int feed_status;
 
   int auth_status;
-
+  int status;
   DataModel data;
 
   factory BaseModel.fromJson(Map<String, dynamic> json) =>
       _$BaseModelFromJson(json);
 
-  BaseModel({this.feed_status, this.data,this.auth_status});
+  BaseModel({this.feed_status, this.data, this.auth_status, this.status});
 }
 
 @JsonSerializable()
 class DataModel {
-  int count;
-  int more;
-  int page;
-  int pageSize;
   List<FeedsModel> list;
 
   factory DataModel.fromJson(Map<String, dynamic> json) =>
       _$DataModelFromJson(json);
 
-  DataModel({this.count, this.more, this.page, this.list, this.pageSize});
+  DataModel({ this.list, });
 }
-
 
 @JsonSerializable()
 class FeedsModel {
@@ -51,13 +46,28 @@ class FeedsModel {
   String image_2;
   String touid;
   String touser;
+  String subject;
 
+  FeedsModel(
+      {this.feedid,
+      this.uid,
+      this.avatar,
+      this.username,
+      this.dateline,
+      this.time,
+      this.hot,
+      this.id,
+      this.blogid,
+      this.doid,
+      this.idtype,
+      this.title,
+      this.message,
+      this.title_message,
+      this.image_1,
+      this.image_2,
+      this.touid,
+      this.touser,this.subject});
 
-  FeedsModel({this.feedid, this.uid, this.avatar, this.username, this.dateline,
-      this.time, this.hot, this.id, this.blogid, this.doid, this.idtype,
-      this.title, this.message, this.title_message, this.image_1, this.image_2,
-      this.touid, this.touser});
-
-  factory FeedsModel.fromJson(Map<String, dynamic> json) => _$FeedsModelFromJson(json);
+  factory FeedsModel.fromJson(Map<String, dynamic> json) =>
+      _$FeedsModelFromJson(json);
 }
-

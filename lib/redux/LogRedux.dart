@@ -2,12 +2,13 @@ import 'package:fz/model/FeedsModel.dart';
 import 'package:fz/redux/PhotoRedux.dart';
 import 'package:redux/redux.dart';
 
-final FeedsReducer = combineReducers<List<FeedsModel>>([
-  TypedReducer<List<FeedsModel>, FeedsRefreshAction>(_refresh),
-  TypedReducer<List<FeedsModel>, FeedsLoadMoreAction>(_loadMore)
+final LogReducer = combineReducers<List<FeedsModel>>([
+  TypedReducer<List<FeedsModel>, LogRefreshAction>(_refresh),
+  TypedReducer<List<FeedsModel>, LogLoadMoreAction>(_loadMore)
 ]);
 
 List<FeedsModel> _refresh(List<FeedsModel> list, action) {
+  print(' log _refresh redux');
   list.clear();
   if (action.list == null) return list;
   if (list == null) list = new List(action.list);
@@ -22,14 +23,14 @@ List<FeedsModel> _loadMore(List<FeedsModel> list, action) {
   return list;
 }
 
-class FeedsRefreshAction {
+class LogRefreshAction {
   final List<FeedsModel> list;
 
-  FeedsRefreshAction(this.list);
+  LogRefreshAction(this.list);
 }
 
-class FeedsLoadMoreAction {
+class LogLoadMoreAction {
   final List<FeedsModel> list;
 
-  FeedsLoadMoreAction(this.list);
+  LogLoadMoreAction(this.list);
 }

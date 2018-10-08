@@ -22,7 +22,7 @@ class FZUserIcon extends StatelessWidget {
           child: new FadeInImage.assetNetwork(
             placeholder:"static/images/bg.jpg",
             //预览图
-            fit: BoxFit.fitWidth,
+            fit: BoxFit.cover,
             image: image,
             width: width,
             height: height,

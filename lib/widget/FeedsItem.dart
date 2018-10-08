@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fz/config/Config.dart';
 import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/style/FZColors.dart';
+import 'package:fz/util/NavigatorUtils.dart';
 import 'package:fz/widget/FZUserIcon.dart';
 
 class FeedsItem extends StatelessWidget {
@@ -28,7 +30,7 @@ class FeedsItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Text(
-                feedsModel.title,
+                feedsModel.username,
                 maxLines: 1,
                 softWrap: true,
               ),
@@ -43,6 +45,18 @@ class FeedsItem extends StatelessWidget {
     );
     itemLayout.children.add(itemHeader);
 
+    // title 简单描述
+    var title = Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Text(
+        feedsModel.idtype == "blogid" ? feedsModel.subject : feedsModel.title,
+        maxLines: 1,
+        style: TextStyle(fontSize: 16.0),
+      ),
+    );
+    itemLayout.children.add(title);
+
+    // 记录 、部分日志
     if (feedsModel.message != null && feedsModel.message.length > 0) {
       var titleMessage = Padding(
         padding: EdgeInsets.only(top: 10.0),
@@ -60,29 +74,32 @@ class FeedsItem extends StatelessWidget {
       //屏幕宽度 - 2边间隔 - 中间间隔
       double cellWidth = (screenWidth - 40.0 - 10.0) / 2;
 
-      var images = new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          FadeInImage.assetNetwork(
-            width: cellWidth,
-            fit: BoxFit.cover,
-            height: cellWidth,
-            placeholder: "static/images/bg.jpg",
-            image: feedsModel.image_1,
-          ),
-          feedsModel.image_2 == null
-              ? new Container(
-                  width: cellWidth,
-                  height: cellWidth,
-                )
-              : FadeInImage.assetNetwork(
-                  fit: BoxFit.cover,
-                  width: cellWidth,
-                  height: cellWidth,
-                  placeholder: "static/images/bg.jpg",
-                  image: feedsModel.image_2,
-                ),
-        ],
+      var images = Container(
+        margin: EdgeInsets.only(top: 5.0),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            FadeInImage.assetNetwork(
+              width: cellWidth,
+              fit: BoxFit.cover,
+              height: cellWidth,
+              placeholder: "static/images/bg.jpg",
+              image: feedsModel.image_1,
+            ),
+            feedsModel.image_2 == null
+                ? new Container(
+                    width: cellWidth,
+                    height: cellWidth,
+                  )
+                : FadeInImage.assetNetwork(
+                    fit: BoxFit.cover,
+                    width: cellWidth,
+                    height: cellWidth,
+                    placeholder: "static/images/bg.jpg",
+                    image: feedsModel.image_2,
+                  ),
+          ],
+        ),
       );
       itemLayout.children.add(images);
     }
@@ -91,16 +108,19 @@ class FeedsItem extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
         elevation: 5.0,
-
         child: new Padding(
             padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
             child: itemLayout),
       ),
       onTap: () {
-        print("${feedsModel.message}  ${feedsModel.title_message}");
+        NavigatorUtils.goFeedsDetail(context, feedsModel.feedid, feedsModel.idtype);
       },
     );
 
     return inkwell;
+//    return new Container(
+//      decoration: BoxDecoration(color: Color(FZColors.lineBlack)),
+//      child: inkwell,
+//    );
   }
 }

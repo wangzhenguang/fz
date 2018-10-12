@@ -1,3 +1,4 @@
+import 'package:fz/model/photo/PhotoViewModule.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'PhotoModel.g.dart';
 @JsonSerializable()
@@ -29,7 +30,7 @@ class DataModel {
 }
 
 @JsonSerializable()
-class PhotoItemModel {
+class PhotoItemModel extends Photo {
   String picid;
   String albumid;
   String topicid;
@@ -53,4 +54,9 @@ class PhotoItemModel {
 
   factory PhotoItemModel.fromJson(Map<String, dynamic> json) =>
       _$PhotoItemModelFromJson(json);
+
+  @override
+  String getImgPath() {
+    return this.filepath;
+  }
 }

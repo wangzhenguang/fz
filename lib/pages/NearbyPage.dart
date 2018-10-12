@@ -118,35 +118,43 @@ class _NearbyPageState extends FZListState<NearbyPage>
   _renderItem(context, index) {
     NearbyItemModel model = pullLoadWidgetControl.dataList[index];
 
-    return Card(
-        color: Color(FZColors.cellBlackBg),
-        child: new Column(children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)),
-            child: FadeInImage.assetNetwork(
-                width: cellWidth,
-                height: cellWidth,
-                fit: BoxFit.cover,
-                placeholder: "static/images/bg.jpg",
-                image: model.avatar),
-          ),
-          new Expanded(
-              child: new Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                Text(
-                  model.username,
-                  maxLines: 1,
-                  style: TextStyle(color: Color(FZColors.textGray)),
-                ),
-                Text(
-                  model.distance,
-                  maxLines: 1,
-                  style: TextStyle(color: Color(FZColors.textGray)),
-                ),
-              ]))
-        ]));
+    return GestureDetector(
+      onTap: () => _goUserDetail(context, model.username, model.uid),
+      child: Card(
+          color: Color(FZColors.cellBlackBg),
+          child: new Column(children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(4.0),
+                  topRight: Radius.circular(4.0)),
+              child: FadeInImage.assetNetwork(
+                  width: cellWidth,
+                  height: cellWidth,
+                  fit: BoxFit.cover,
+                  placeholder: "static/images/bg.jpg",
+                  image: model?.avatar ?? ""),
+            ),
+            new Expanded(
+                child: new Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                  Text(
+                    model.username,
+                    maxLines: 1,
+                    style: TextStyle(color: Color(FZColors.textGray)),
+                  ),
+                  Text(
+                    model.distance,
+                    maxLines: 1,
+                    style: TextStyle(color: Color(FZColors.textGray)),
+                  ),
+                ]))
+          ])),
+    );
+  }
+
+  void _goUserDetail(BuildContext context, username, uid) {
+    NavigatorUtils.goOtherDetail(context, username, uid);
   }
 }

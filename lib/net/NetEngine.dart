@@ -15,7 +15,7 @@ class NetEngine {
       receiveTimeout: 3000,
       contentType: ContentType.json);
 
-  static excute(url, params, {noTip = false, method = "get"}) async {
+  static excute(url,{ params, noTip = false, method = "get"}) async {
     // 判断网咯情况
     var connectResult = await new Connectivity().checkConnectivity();
     if (connectResult == ConnectivityResult.none) {

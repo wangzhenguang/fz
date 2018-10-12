@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/feeds/FeedsModel.dart';
 import 'package:fz/style/FZColors.dart';
 import 'package:fz/style/FZString.dart';
 import 'package:fz/style/FZTextStyle.dart';

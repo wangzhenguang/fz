@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/feeds/FeedsModel.dart';
 import 'package:fz/net/service/Api.dart';
 import 'package:fz/redux/FZState.dart';
 import 'package:fz/util/NavigatorUtils.dart';

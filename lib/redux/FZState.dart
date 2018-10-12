@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/feeds/FeedsModel.dart';
 import 'package:fz/model/nearby/NearbyModel.dart';
 import 'package:fz/model/photo/PhotoModel.dart';
 import 'package:fz/redux/FeedsRedux.dart';

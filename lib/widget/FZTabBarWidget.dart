@@ -99,7 +99,6 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
       );
     }
 
-
     //底部
     return new Scaffold(
       drawer: widget.drawer,
@@ -110,14 +109,17 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
         actions: widget.actions,
         centerTitle: widget.centerTitle,
       ),
-      body: new TabBarView(
-        children: widget.tabViews,
-        controller: _tabController,
+      body: Center(
+        child: widget.tabViews[_currentIndex],
       ),
+
+//      new TabBarView(
+//        children: widget.tabViews,
+//        controller: _tabController,
+//      ),
       bottomNavigationBar: new Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Color(FZColors.appBarColor)
-        ),
+        data: Theme.of(context)
+            .copyWith(canvasColor: Color(FZColors.appBarColor)),
         child: new BottomNavigationBar(
           items: widget.bottomNavigationBarItem,
 //          type: BottomNavigationBarType.fixed,

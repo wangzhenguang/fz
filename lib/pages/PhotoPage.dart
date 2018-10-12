@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fz/model/photo/PhotoModel.dart';
+import 'package:fz/model/photo/PhotoViewModule.dart';
 import 'package:fz/redux/FZState.dart';
+import 'package:fz/util/FZContants.dart';
 import 'package:fz/util/NavigatorUtils.dart';
 import 'package:fz/widget/FZListState.dart';
 import 'package:fz/widget/FZPullLoadWidget.dart';
@@ -58,10 +60,9 @@ class _PhotoPageState extends FZListState<PhotoPage>
 
   @override
   requestLoadMore() async {
-
     print("photo requestLoadMore");
 
-    PhotoModel result = await Api.getAllPhotos(getStore(),page);
+    PhotoModel result = await Api.getAllPhotos(getStore(), page);
     if (result?.auth_status == -1) {
       //没有token 跳转登录
       NavigatorUtils.goLogin(context);
@@ -74,13 +75,21 @@ class _PhotoPageState extends FZListState<PhotoPage>
 
   _renderItem(context, index) {
     if (pullLoadWidgetControl.dataList.length == 0) {
-      return Text("xxx");
+      return Text("没有照片！！！");
     }
 
     PhotoItemModel data = pullLoadWidgetControl.dataList[index];
-    return FadeInImage.assetNetwork(
-        fit: BoxFit.cover,
-        placeholder: "static/images/bg.jpg",
-        image: data.thumbpic);
+    return GestureDetector(
+      child: FadeInImage.assetNetwork(
+          fit: BoxFit.cover,
+          placeholder: FZContants.IMG_PLACEHOLDER,
+          image: data.thumbpic??""),
+      onTap: () {
+        PhotoViewModule photoViewModule = PhotoViewModule();
+        photoViewModule.list = pullLoadWidgetControl.dataList;
+        photoViewModule.curIndex= index;
+        NavigatorUtils.goPhotoViewPage(context, photoViewModule);
+      },
+    );
   }
 }

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fz/pages/LogPage.dart';
 import 'package:fz/pages/MinePage.dart';
 import 'package:fz/pages/NearbyPage.dart';
 import 'package:fz/pages/PhotoPage.dart';
 import 'package:fz/style/FZColors.dart';
 import 'package:fz/style/FZIconfont.dart';
+import 'package:fz/style/FZTextStyle.dart';
 import 'package:fz/widget/BottomNavigationWidget.dart';
 import 'package:fz/widget/FZTabBarWidget.dart';
 import 'package:fz/pages/DynamicPage.dart';
@@ -39,10 +41,16 @@ class _HomePageState extends State<HomePage>
               actions: <Widget>[
                 new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
-                    child: Text("取消")),
+                    child: Text(
+                      "取消",
+                      style: FZTextStyle.normalText,
+                    )),
                 new FlatButton(
                     onPressed: () => Navigator.of(context).pop(true),
-                    child: Text("确认"))
+                    child: Text(
+                      "确认",
+                      style: FZTextStyle.normalText,
+                    ))
               ],
             ));
   }
@@ -74,7 +82,7 @@ class _HomePageState extends State<HomePage>
         title: _renderAppBar(),
         actions: <Widget>[
           new IconButton(
-              icon: new Icon(Icons.add_a_photo), onPressed: _writeNote),
+              icon: new Icon(Icons.add_a_photo), onPressed: _takePhoto),
           new IconButton(icon: new Icon(Icons.note_add), onPressed: _writeNote)
         ],
         onPageChanged: _onPageChanged,
@@ -109,7 +117,11 @@ class _HomePageState extends State<HomePage>
   }
 
   _writeNote() {
-    print("写记录");
+    Fluttertoast.showToast(msg: "暂未开发此功能");
+  }
+
+  _takePhoto() {
+    Fluttertoast.showToast(msg: "暂未开发此功能");
   }
 
   _renderAppBar() {

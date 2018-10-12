@@ -1,4 +1,4 @@
-import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/feeds/FeedsModel.dart';
 import 'package:fz/model/photo/PhotoModel.dart';
 import 'package:redux/redux.dart';
 

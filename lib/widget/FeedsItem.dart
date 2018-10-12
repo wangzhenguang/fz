@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fz/config/Config.dart';
-import 'package:fz/model/FeedsModel.dart';
+import 'package:fz/model/feeds/FeedsModel.dart';
 import 'package:fz/style/FZColors.dart';
+import 'package:fz/util/FZContants.dart';
 import 'package:fz/util/NavigatorUtils.dart';
 import 'package:fz/widget/FZUserIcon.dart';
 
@@ -21,7 +22,7 @@ class FeedsItem extends StatelessWidget {
       children: <Widget>[
         FZUserIcon(
           image: feedsModel.avatar,
-          onPressed: null,
+          onPressed: () => _goUserDetail(context),
         ),
         Expanded(
             child: new Container(
@@ -83,7 +84,7 @@ class FeedsItem extends StatelessWidget {
               width: cellWidth,
               fit: BoxFit.cover,
               height: cellWidth,
-              placeholder: "static/images/bg.jpg",
+              placeholder: FZContants.IMG_PLACEHOLDER,
               image: feedsModel.image_1,
             ),
             feedsModel.image_2 == null
@@ -95,7 +96,7 @@ class FeedsItem extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: cellWidth,
                     height: cellWidth,
-                    placeholder: "static/images/bg.jpg",
+                    placeholder: FZContants.IMG_PLACEHOLDER,
                     image: feedsModel.image_2,
                   ),
           ],
@@ -113,7 +114,7 @@ class FeedsItem extends StatelessWidget {
             child: itemLayout),
       ),
       onTap: () {
-        NavigatorUtils.goFeedsDetail(context, feedsModel.id, feedsModel.idtype);
+        NavigatorUtils.goFeedsDetail(context, feedsModel);
       },
     );
 
@@ -122,5 +123,9 @@ class FeedsItem extends StatelessWidget {
 //      decoration: BoxDecoration(color: Color(FZColors.lineBlack)),
 //      child: inkwell,
 //    );
+  }
+
+  void _goUserDetail(BuildContext context) {
+    NavigatorUtils.goOtherDetail(context, feedsModel.username, feedsModel.uid);
   }
 }

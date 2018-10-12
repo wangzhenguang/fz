@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fz/model/user/UserInfo.dart';
 import 'package:fz/net/service/Api.dart';
 import 'package:fz/style/FZColors.dart';
 import 'package:fz/util/LocalStorage.dart';
+import 'package:fz/util/NavigatorUtils.dart';
 import 'package:fz/widget/FZUserIcon.dart';
 import 'dart:convert';
 
@@ -150,18 +152,23 @@ class _MinePageState extends State<MinePage>
         switch (index) {
           case 0:
             print("访客");
+            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
             break;
           case 1:
             print("相册");
+            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
             break;
           case 2:
             print("日志");
+            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
             break;
           case 3:
             print("动态");
+            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
             break;
           case 4:
             print("设置");
+            NavigatorUtils.goSetting(context);
             break;
         }
       },

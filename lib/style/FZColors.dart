@@ -45,12 +45,21 @@ class FZColors {
   static ThemeData themeData = new ThemeData(
     primarySwatch: primarySwatch,
     scaffoldBackgroundColor: Color(FZColors.lineBlack),
-    backgroundColor: Color(FZColors.lineBlack),
+    backgroundColor: Color(FZColors.cellBlackBg),
     cardColor: Color(FZColors.cellBlackBg),
+    ///progress 用到这个颜色
+    accentColor: Color(FZColors.white),
+    /// 设置页面等按钮背景色
+    buttonColor: Color(FZColors.lineBlack),
     textTheme: TextTheme(
+        /// 默认字体颜色
         body1: TextStyle(color: Color(textGray)),
+        ///未知
         body2: TextStyle(color: Colors.amber),
+        ///按钮文字颜色
         button: TextStyle(color: Color(white))),
 //    canvasColor: Color(FZColors.cellBlackBg)
   );
+
+  static const PROGRESS_COLOR = 0xFF201F1D;
 }

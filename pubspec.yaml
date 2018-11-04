@@ -48,7 +48,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
 
   assets:
-    - static/images/bg.jpg
+    - static/images/bg.png
     - static/images/icon_homepage_normal.png
     - static/images/icon_homepage_selected.png
 

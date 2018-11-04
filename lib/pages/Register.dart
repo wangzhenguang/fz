@@ -16,7 +16,7 @@ class RegisterPageState extends State<RegisterPage> {
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
   var hintTips = new TextStyle(fontSize: 15.0, color: Colors.black26);
-  static const LOGO = "images/bg.jpg";
+  static const LOGO = "images/bg.png";
 
   var _userPassController = new TextEditingController();
   var _userNameController = new TextEditingController();

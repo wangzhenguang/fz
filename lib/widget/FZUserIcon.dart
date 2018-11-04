@@ -20,7 +20,7 @@ class FZUserIcon extends StatelessWidget {
         constraints: const BoxConstraints(minWidth: 0.0, minHeight: 0.0),
         child: new ClipOval(
           child: new FadeInImage.assetNetwork(
-            placeholder:"static/images/bg.jpg",
+            placeholder:"static/images/bg.png",
             //预览图
             fit: BoxFit.cover,
             image: image,

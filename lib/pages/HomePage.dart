@@ -89,23 +89,6 @@ class _HomePageState extends State<HomePage>
       ),
     );
 
-    return WillPopScope(
-      onWillPop: () => _dialogExitApp(context),
-      child: BottomNavigationWidget(
-        tabBarTitles: tabTitle,
-        tabImages: _tabImages,
-        body: _body,
-        titles: tabTitle,
-        actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.add_a_photo), onPressed: _writeNote),
-          new IconButton(icon: new Icon(Icons.note_add), onPressed: _writeNote)
-        ],
-        tabTextNormal: Color(FZColors.primaryDarkValue),
-        tabTextSelected: Color(FZColors.colorPri),
-        themeColor: Color(FZColors.colorPri),
-      ),
-    );
   }
 
   _onPageChanged(index) {

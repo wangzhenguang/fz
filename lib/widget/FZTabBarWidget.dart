@@ -102,21 +102,15 @@ class FZTabBarWidgetState extends State<FZTabBarWidget>
     //底部
     return new Scaffold(
       drawer: widget.drawer,
-//      backgroundColor: Color(FZColors.lineBlack),
       appBar: new AppBar(
-//        backgroundColor: Color(FZColors.primaryValue),
         title: widget.title,
         actions: widget.actions,
         centerTitle: widget.centerTitle,
       ),
-      body: Center(
-        child: widget.tabViews[_currentIndex],
+      body: new TabBarView(
+        children: widget.tabViews,
+        controller: _tabController,
       ),
-
-//      new TabBarView(
-//        children: widget.tabViews,
-//        controller: _tabController,
-//      ),
       bottomNavigationBar: new Theme(
         data: Theme.of(context)
             .copyWith(canvasColor: Color(FZColors.appBarColor)),

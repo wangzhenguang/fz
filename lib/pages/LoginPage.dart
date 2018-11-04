@@ -19,7 +19,7 @@ class LoginPageState extends State<LoginPage> {
   var topBottomPadding = 4.0;
   var textTips = new TextStyle(fontSize: 16.0, color: Colors.black);
   var hintTips = new TextStyle(fontSize: 15.0, color: Colors.black26);
-  static const LOGO = "static/images/bg.jpg";
+  static const LOGO = "static/images/bg.png";
 
   var _userPassController = new TextEditingController();
   var _userNameController = new TextEditingController();
@@ -29,7 +29,7 @@ class LoginPageState extends State<LoginPage> {
     _userPassController.text = 'nihaoa';
     _userNameController.text = "610880568@qq.com";
     return new Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: new AppBar(
           title: new Text(
             "登录",
@@ -37,68 +37,80 @@ class LoginPageState extends State<LoginPage> {
           ),
           iconTheme: new IconThemeData(color: Colors.black),
         ),
-        body: SingleChildScrollView(child: new Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Padding(
-                padding: new EdgeInsets.fromLTRB(
-                    leftRightPadding, 50.0, leftRightPadding, 10.0),
-                child: new Image.asset(
-                  LOGO,
-                  width: 100.0,
-                  height: 100.0,
-                )),
-            new Padding(
-              padding: new EdgeInsets.fromLTRB(
-                  leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
-              child: new TextField(
-                style: textTips,
-                controller: _userNameController,
-                decoration: new InputDecoration(hintText: "请输入用户名"),
+        body: SingleChildScrollView(
+          child: new Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Text(
+                  "飞赞",
+                  style: TextStyle(fontSize: 32.0, color: Colors.black),
+                ),
+                width: 80.0,
+                height: 80.0,
+                margin: EdgeInsets.only(top: 50.0),
+                alignment: Alignment.center,
               ),
-            ),
-            new Padding(
-              padding: new EdgeInsets.fromLTRB(
-                  leftRightPadding, 30.0, leftRightPadding, topBottomPadding),
-              child: new TextField(
-                style: textTips,
-                controller: _userPassController,
-                decoration: new InputDecoration(hintText: "请输入密码"),
-                obscureText: true,
 
+//            new Padding(
+//
+//                padding: new EdgeInsets.fromLTRB(
+//                    leftRightPadding, 50.0, leftRightPadding, 10.0),
+//                child: new Image.asset(
+//                  LOGO,
+//                  width: 100.0,
+//                  height: 100.0,
+//                )),
+              new Padding(
+                padding: new EdgeInsets.fromLTRB(
+                    leftRightPadding, 50.0, leftRightPadding, topBottomPadding),
+                child: new TextField(
+                  style: textTips,
+                  controller: _userNameController,
+                  decoration: new InputDecoration(hintText: "请输入用户名"),
+                ),
               ),
-            ),
-            new Container(
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-              child: new Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  new Expanded(
-                    child: new Card(
-                      color: Color(FZColors.primaryValue),
-                      child: new FlatButton(
-                          onPressed: _login,
-                          child: new Text("登录",
-                              style: new TextStyle(color: Colors.white))),
-                    ),
-                  ),
-                  new Expanded(
-                    child: new Card(
-                      color: Color(FZColors.primaryValue),
-                      child: new FlatButton(
-                          onPressed: () => NavigatorUtils.goRegister(context),
-                          child: new Text("注册",
-                              style: new TextStyle(color: Colors.white))),
-                    ),
-                  ),
-                ],
+              new Padding(
+                padding: new EdgeInsets.fromLTRB(
+                    leftRightPadding, 30.0, leftRightPadding, topBottomPadding),
+                child: new TextField(
+                  style: textTips,
+                  controller: _userPassController,
+                  decoration: new InputDecoration(hintText: "请输入密码"),
+                  obscureText: true,
+                ),
               ),
-            )
-          ],
-        ), )
-    );
+              new Container(
+                padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+                child: new Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Expanded(
+                      child: new Card(
+                        color: Color(FZColors.primaryValue),
+                        child: new FlatButton(
+                            onPressed: _login,
+                            child: new Text("登录",
+                                style: new TextStyle(color: Colors.white))),
+                      ),
+                    ),
+                    new Expanded(
+                      child: new Card(
+                        color: Color(FZColors.primaryValue),
+                        child: new FlatButton(
+                            onPressed: () => NavigatorUtils.goRegister(context),
+                            child: new Text("注册",
+                                style: new TextStyle(color: Colors.white))),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   _login() {

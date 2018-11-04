@@ -23,10 +23,15 @@ class _MinePageState extends State<MinePage>
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     var list = ListView.builder(
         itemCount: titles.length * 2 + 2,
         itemBuilder: (context, index) => _renderRow(index));
+
+    if (_userInfo == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
     return list;
   }
@@ -41,17 +46,8 @@ class _MinePageState extends State<MinePage>
     LocalStorage.get(Api.USER_INFO).then((value) {
       setState(() {
         this._userInfo = UserInfo.fromJson(json.decode(value)["data"]);
-        print("${_userInfo.toString()}");
       });
     });
-//    Api.getUserProfile(userName, userPass).then((res) {
-//      Navigator.pop(context);
-//      if (res != null && res["account_status"] == 1) {
-//        NavigatorUtils.goHome(context);
-//      } else if (res != null && res["account_status"] == 0) {
-//        Fluttertoast.showToast(msg: "账号密码有误！", gravity: ToastGravity.CENTER);
-//      }
-//    });
   }
 
   _renderRow(int index) {
@@ -60,7 +56,7 @@ class _MinePageState extends State<MinePage>
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
-            child: FZUserIcon(image: _userInfo.avatar),
+            child: FZUserIcon(image: _userInfo.avatar??""),
           ),
           Expanded(
             child: Text(
@@ -152,19 +148,19 @@ class _MinePageState extends State<MinePage>
         switch (index) {
           case 0:
             print("访客");
-            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "还没写", gravity: ToastGravity.CENTER);
             break;
           case 1:
             print("相册");
-            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "还没写", gravity: ToastGravity.CENTER);
             break;
           case 2:
             print("日志");
-            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "还没写", gravity: ToastGravity.CENTER);
             break;
           case 3:
             print("动态");
-            Fluttertoast.showToast(msg: "还没写",gravity: ToastGravity.CENTER);
+            Fluttertoast.showToast(msg: "还没写", gravity: ToastGravity.CENTER);
             break;
           case 4:
             print("设置");

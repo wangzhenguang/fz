@@ -19,5 +19,10 @@ class UserInfo {
   UserInfo({this.uid, this.username, this.avatar, this.fans_count,
       this.follows_count, this.note});
 
+  @override
+  String toString() {
+    return 'UserInfo{uid: $uid, username: $username, avatar: $avatar, fans_count: $fans_count, follows_count: $follows_count, note: $note}';
+  }
+
 
 }

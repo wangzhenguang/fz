@@ -57,7 +57,7 @@ class WelcomePageState extends State<WelcomePage> {
               padding: EdgeInsets.only(top: 200.0),
               alignment: Alignment.topCenter,
               child: new Text(
-                "赞",
+                "飞赞",
                 style: new TextStyle(color: Colors.white, fontSize: 32.0),
               ),
             ));

@@ -131,7 +131,7 @@ class _NearbyPageState extends FZListState<NearbyPage>
                   width: cellWidth,
                   height: cellWidth,
                   fit: BoxFit.cover,
-                  placeholder: "static/images/bg.jpg",
+                  placeholder: "static/images/bg.png",
                   image: model?.avatar ?? ""),
             ),
             new Expanded(

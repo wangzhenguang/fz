@@ -10,7 +10,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   flutter_redux: ^0.5.2
-  fluttertoast: ^2.0.7
+  fluttertoast: ^2.0.9
   event_bus:  ^1.0.1
   flutter_statusbar: ^0.0.1
   flutter_spinkit: ^2.0.1
